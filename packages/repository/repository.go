@@ -11,6 +11,7 @@ type Authorization interface {
 }
 
 type Poem interface {
+	Create(poem poem.Poems) (int, error)
 }
 
 type Repository struct {
@@ -21,5 +22,6 @@ type Repository struct {
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthPostgres(db),
+		Poem:          NewPoemPostgres(db),
 	}
 }

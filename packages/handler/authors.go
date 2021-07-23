@@ -6,10 +6,6 @@ func (h *Handler) addAuthor(c *gin.Context) {
 
 }
 
-func (h *Handler) getAllAuthors(c *gin.Context) {
-
-}
-
 func (h *Handler) getAuthorById(c *gin.Context) {
 
 }

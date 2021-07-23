@@ -9,8 +9,7 @@ CREATE TABLE users
 CREATE TABLE authors
 (
     id serial NOT NULL UNIQUE,
-    name VARCHAR(255) NOT NULL,
-    surname VARCHAR(255) NOT NULL
+    name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE poems
@@ -18,5 +17,5 @@ CREATE TABLE poems
     id serial NOT NULL UNIQUE,
     title VARCHAR(255) NOT NULL,
     text VARCHAR(255) NOT NULL,
-    author_id int REFERENCES authors (id) on delete CASCADE NOT NULL
+    author_id int DEFAULT 0 REFERENCES authors (id) on delete CASCADE NOT NULL
 );

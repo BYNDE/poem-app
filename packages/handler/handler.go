@@ -27,7 +27,6 @@ func (h *Handler) InitRouters() *gin.Engine {
 		poems := api.Group("/poems")
 		{
 			poems.POST("/", h.addPoem)
-			poems.GET("/", h.getAllPoems) // ! удалить при реальной базе данных
 			poems.GET(":id", h.getPoemById)
 			poems.PUT(":id", h.updatePoem)
 			poems.DELETE(":id", h.deletePoem)
@@ -36,7 +35,6 @@ func (h *Handler) InitRouters() *gin.Engine {
 		authors := api.Group("/authors")
 		{
 			authors.POST("/", h.addAuthor)
-			authors.GET("/", h.getAllAuthors) // ! удалить при реальной базе данных
 			authors.PUT(":id", h.updateAuthor)
 			authors.GET(":id", h.getAuthorById)
 			authors.DELETE(":id", h.deleteAuthor)
