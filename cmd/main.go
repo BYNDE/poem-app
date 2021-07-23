@@ -7,6 +7,7 @@ import (
 	"github.com/dvd-denis/poem-app/packages/handler"
 	"github.com/dvd-denis/poem-app/packages/repository"
 	"github.com/dvd-denis/poem-app/packages/service"
+	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/subosito/gotenv"
