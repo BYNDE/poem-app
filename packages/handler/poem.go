@@ -7,22 +7,25 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type poemInInput struct {
+	Title    string `json:"title" binding:"required"`
+	Text     string `json:"text" binding:"required"`
+	AuthorId int    `json:"authorId"`
+}
+
 func (h *Handler) addPoem(c *gin.Context) {
-	_, ok := c.Get(userCtx)
-	if !ok {
-		newErrorResponse(c, http.StatusInternalServerError, "user id not found")
-		return
-	}
-	var input poem.Poems
+	var input poemInInput
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
-	if input.AuthorId == 0 {
-		input.AuthorId = 1
+
+	poem := poem.Poems{
+		Title: input.Title,
+		Text:  input.Text,
 	}
 
-	id, err := h.services.Poem.Create(input)
+	id, err := h.services.Poem.Create(input.AuthorId, poem)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return

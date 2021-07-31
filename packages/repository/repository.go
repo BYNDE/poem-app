@@ -11,7 +11,7 @@ type Authorization interface {
 }
 
 type Poem interface {
-	Create(poem poem.Poems) (int, error)
+	Create(authorId int, poem poem.Poems) (int, error)
 }
 
 type Repository struct {

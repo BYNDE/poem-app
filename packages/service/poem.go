@@ -13,6 +13,6 @@ func newPoemService(repo repository.Poem) *PoemService {
 	return &PoemService{repo: repo}
 }
 
-func (s *PoemService) Create(poem poem.Poems) (int, error) {
-	return s.repo.Create(poem)
+func (s *PoemService) Create(authorId int, poem poem.Poems) (int, error) {
+	return s.repo.Create(authorId, poem)
 }
