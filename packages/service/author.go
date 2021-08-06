@@ -25,6 +25,10 @@ func (s *AuthorService) GetByName(name string) ([]poem.Authors, error) {
 	return s.repo.GetByName(name)
 }
 
+func (s *AuthorService) GetAllLimit(limit int) ([]poem.Authors, error) {
+	return s.repo.GetAllLimit(limit)
+}
+
 func (s *AuthorService) Delete(id int) error {
 	return s.repo.Delete(id)
 }

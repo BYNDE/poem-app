@@ -37,6 +37,21 @@ func (h *Handler) addPoem(c *gin.Context) {
 	})
 }
 
+func (h *Handler) GetAllPoemsLimit(c *gin.Context) {
+	limit, err := strconv.Atoi(c.Param("limit"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	poems, err := h.services.Poem.GetAllLimit(limit)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+	newResponse(c, http.StatusOK, poems)
+}
+
 func (h *Handler) getPoemById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

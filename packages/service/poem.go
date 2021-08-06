@@ -17,6 +17,10 @@ func (s *PoemService) Create(authorId int, poem poem.Poems) (int, error) {
 	return s.repo.Create(authorId, poem)
 }
 
+func (s *PoemService) GetAllLimit(limit int) ([]poem.Poems, error) {
+	return s.repo.GetAllLimit(limit)
+}
+
 func (s *PoemService) GetById(id int) (poem.Poems, error) {
 	return s.repo.GetById(id)
 }

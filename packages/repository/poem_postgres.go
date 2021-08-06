@@ -41,6 +41,31 @@ func (r *PoemPostgres) Create(authorId int, poem poem.Poems) (int, error) {
 
 }
 
+func (r *PoemPostgres) GetAllLimit(limit int) ([]poem.Poems, error) {
+	var poems []poem.Poems
+
+	query := fmt.Sprintf("SELECT id, title, text FROM %s LIMIT $1", authorTable)
+	if err := r.db.Select(&poems, query, limit); err != nil {
+		return poems, err
+	}
+
+	var authorId int
+
+	for i, _ := range poems {
+		query = fmt.Sprintf("SELECT author_id FROM %s WHERE poem_id = $1", authorsListsTable)
+		if err := r.db.Get(&authorId, query, poems[i].Id); err != nil {
+			return poems, err
+		}
+
+		query = fmt.Sprintf("SELECT name FROM %s WHERE id = $1", authorTable)
+		if err := r.db.Get(&poems[i].Author, query, authorId); err != nil {
+			return poems, err
+		}
+	}
+
+	return poems, nil
+}
+
 func (r *PoemPostgres) GetById(id int) (poem.Poems, error) {
 	var poem poem.Poems
 
@@ -66,8 +91,7 @@ func (r *PoemPostgres) GetByTitle(title string) ([]poem.Poems, error) {
 	var poems []poem.Poems
 
 	query := fmt.Sprintf("SELECT id, title, text FROM %s WHERE title LIKE $1", poemsTable)
-	err := r.db.Select(&poems, query, title+"%")
-	if err != nil {
+	if err := r.db.Select(&poems, query, title+"%"); err != nil {
 		return poems, err
 	}
 
@@ -75,20 +99,17 @@ func (r *PoemPostgres) GetByTitle(title string) ([]poem.Poems, error) {
 
 	for i, _ := range poems {
 		query = fmt.Sprintf("SELECT author_id FROM %s WHERE poem_id = $1", authorsListsTable)
-		err = r.db.Get(&authorId, query, poems[i].Id)
-		if err != nil {
+		if err := r.db.Get(&authorId, query, poems[i].Id); err != nil {
 			return poems, err
 		}
 
 		query = fmt.Sprintf("SELECT name FROM %s WHERE id = $1", authorTable)
-		err = r.db.Get(&poems[i].Author, query, authorId) // Выдаёт в utf-8, когда нужно WINDOWS-1251
-
-		if err != nil {
+		if err := r.db.Get(&poems[i].Author, query, authorId); err != nil {
 			return poems, err
 		}
 	}
 
-	return poems, err
+	return poems, nil
 }
 
 func (r *PoemPostgres) Delete(id int) error {

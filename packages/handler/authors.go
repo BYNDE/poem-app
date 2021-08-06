@@ -26,6 +26,21 @@ func (h *Handler) addAuthor(c *gin.Context) {
 	})
 }
 
+func (h *Handler) GetAllAuthorsLimit(c *gin.Context) {
+	limit, err := strconv.Atoi(c.Param("limit"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	authors, err := h.services.Author.GetAllLimit(limit)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+	newResponse(c, http.StatusOK, authors)
+}
+
 func (h *Handler) getAuthorById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

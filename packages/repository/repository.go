@@ -16,6 +16,7 @@ type Poem interface {
 	GetByTitle(title string) ([]poem.Poems, error)
 	Delete(id int) error
 	Update(id int, input poem.UpdatePoemInput) error
+	GetAllLimit(limit int) ([]poem.Poems, error)
 }
 
 type Author interface {
@@ -25,6 +26,7 @@ type Author interface {
 	Delete(id int) error
 	Update(id int, input poem.UpdateAuthorInput) error
 	GetPoemsById(id int) ([]poem.Poems, error)
+	GetAllLimit(limit int) ([]poem.Authors, error)
 }
 
 type Repository struct {

@@ -17,10 +17,12 @@ type Poem interface {
 	GetByTitle(title string) ([]poem.Poems, error)
 	Delete(id int) error
 	Update(id int, input poem.UpdatePoemInput) error
+	GetAllLimit(limit int) ([]poem.Poems, error)
 }
 
 type Author interface {
 	Create(author poem.Authors) (int, error)
+	GetAllLimit(limit int) ([]poem.Authors, error)
 	GetById(id int) (poem.Authors, error)
 	GetByName(name string) ([]poem.Authors, error)
 	Delete(id int) error

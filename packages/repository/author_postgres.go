@@ -24,6 +24,15 @@ func (r *AuthorPostgres) Create(author poem.Authors) (int, error) {
 	return id, err
 }
 
+func (r *AuthorPostgres) GetAllLimit(limit int) ([]poem.Authors, error) {
+	var authors []poem.Authors
+
+	query := fmt.Sprintf("SELECT id, name FROM %s LIMIT $1", authorTable)
+	err := r.db.Select(&authors, query, limit)
+
+	return authors, err
+}
+
 func (r *AuthorPostgres) GetById(id int) (poem.Authors, error) {
 	var author poem.Authors
 
