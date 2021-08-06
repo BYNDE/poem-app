@@ -24,3 +24,9 @@
 [2021-08-07 01:17:52]  INFO Poem-APP Started
 [2021-08-07 01:18:15]  INFO Method: 'GET' RequestURI: '/api/poems/limit/20' Status: '200 OK' CLientIp: '31.173.240.242'
 [2021-08-07 01:18:34]  INFO Method: 'GET' RequestURI: '/api/poems/limit/200' Status: '200 OK' CLientIp: '31.173.240.242'
+[2021-08-07 01:23:44]  INFO Method: 'GET' RequestURI: '/api/poems/title/%D1%8F%20%D0%BB%D1%8E%D0%B1%D0%BB%D1%8E' Status: '200 OK' CLientIp: '31.173.240.242'
+[2021-08-07 01:29:46]  INFO Poem-APP Shutting Down
+[2021-08-07 01:29:48]  INFO Poem-APP Started
+[2021-08-07 01:29:59]  INFO Method: 'GET' RequestURI: '/api/poems/limit/200' Status: '200 OK' CLientIp: '31.173.240.242'
+[2021-08-07 01:30:19]  INFO Method: 'GET' RequestURI: '/api/poems/title/в АвтоБУсе' Status: '200 OK' CLientIp: '31.173.240.242'
+[2021-08-07 01:31:13]  INFO Method: 'GET' RequestURI: '/api/poems/title/я люблю' Status: '200 OK' CLientIp: '31.173.240.242'

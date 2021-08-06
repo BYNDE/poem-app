@@ -3,6 +3,7 @@ package handler
 import (
 	"errors"
 	"net/http"
+	"net/url"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -19,13 +20,15 @@ type statusResponse struct {
 
 func newResponse(c *gin.Context, StatusCode int, obj interface{}) {
 	ip, _ := getClientIPByHeaders(c.Request)
-	logrus.Infoln("Method: '" + c.Request.Method + "' RequestURI: '" + c.Request.RequestURI + "' Status: '" + strconv.Itoa(StatusCode) + " " + http.StatusText(StatusCode) + "' CLientIp: '" + ip + "'")
+	req, _ := url.QueryUnescape(c.Request.RequestURI)
+	logrus.Infoln("Method: '" + c.Request.Method + "' RequestURI: '" + req + "' Status: '" + strconv.Itoa(StatusCode) + " " + http.StatusText(StatusCode) + "' CLientIp: '" + ip + "'")
 	c.JSON(StatusCode, obj)
 }
 
 func newErrorResponse(c *gin.Context, StatusCode int, message string) {
 	ip, _ := getClientIPByHeaders(c.Request)
-	logrus.Error("Method: '" + c.Request.Method + "' RequestURI: '" + c.Request.RequestURI + "' Status: '" + strconv.Itoa(StatusCode) + " " + http.StatusText(StatusCode) + "' Message: '" + message + "' CLientIp: '" + ip + "'")
+	req, _ := url.QueryUnescape(c.Request.RequestURI)
+	logrus.Error("Method: '" + c.Request.Method + "' RequestURI: '" + req + "' Status: '" + strconv.Itoa(StatusCode) + " " + http.StatusText(StatusCode) + "' Message: '" + message + "' CLientIp: '" + ip + "'")
 	c.AbortWithStatusJSON(StatusCode, errorResponse{Message: message})
 }
 
