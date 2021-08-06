@@ -1,16 +1,9 @@
 package handler
 
-import (
-	"errors"
-	"net/http"
-
-	"github.com/gin-gonic/gin"
-)
-
-const (
-	authorizationHeader = "Authorization"
-	userCtx             = "userId"
-)
+// const (
+// 	authorizationHeader = "Authorization"
+// 	userCtx             = "userId"
+// )
 
 // func (h *Handler) userIdentity(c *gin.Context) {
 // 	header := c.GetHeader(authorizationHeader)
@@ -34,18 +27,18 @@ const (
 // 	c.Set(userCtx, userId)
 // }
 
-func getUserId(c *gin.Context) (int, error) {
-	id, ok := c.Get(userCtx)
-	if !ok {
-		newErrorResponse(c, http.StatusInternalServerError, "user id not found")
-		return 0, errors.New("user id not found")
-	}
+// func getUserId(c *gin.Context) (int, error) {
+// 	id, ok := c.Get(userCtx)
+// 	if !ok {
+// 		newErrorResponse(c, http.StatusInternalServerError, "user id not found")
+// 		return 0, errors.New("user id not found")
+// 	}
 
-	idInt, ok := id.(int)
-	if !ok {
-		newErrorResponse(c, http.StatusInternalServerError, "user id is of invalid type")
-		return 0, errors.New("user id not found")
-	}
+// 	idInt, ok := id.(int)
+// 	if !ok {
+// 		newErrorResponse(c, http.StatusInternalServerError, "user id is of invalid type")
+// 		return 0, errors.New("user id not found")
+// 	}
 
-	return idInt, nil
-}
+// 	return idInt, nil
+// }
