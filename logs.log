@@ -21,3 +21,6 @@
 [2021-08-07 01:14:58]  INFO Method: 'GET' RequestURI: '/api/poems/title/%D0%B2%20%D0%90%D0%B2%D1%82%D0%BE%D0%91%D1%83%D1%81%D0%B5' Status: '200 OK' CLientIp: '31.173.240.242'
 [2021-08-07 01:17:02] ERROR Method: 'GET' RequestURI: '/api/poems/limit/20' Status: '500 Internal Server Error' Message: 'pq: столбец "title" не существует' CLientIp: '31.173.240.242'
 [2021-08-07 01:17:50]  INFO Poem-APP Shutting Down
+[2021-08-07 01:17:52]  INFO Poem-APP Started
+[2021-08-07 01:18:15]  INFO Method: 'GET' RequestURI: '/api/poems/limit/20' Status: '200 OK' CLientIp: '31.173.240.242'
+[2021-08-07 01:18:34]  INFO Method: 'GET' RequestURI: '/api/poems/limit/200' Status: '200 OK' CLientIp: '31.173.240.242'

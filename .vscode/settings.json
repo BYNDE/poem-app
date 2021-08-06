@@ -5,6 +5,10 @@
             "foreground": "#ff0000"
         },
         {
+            "pattern": "500 Internal Server Error",
+            "foreground": "#ff0000"
+        },
+        {
             "pattern": "INFO",
             "foreground": "#4432e6"
         },
