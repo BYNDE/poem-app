@@ -39,7 +39,7 @@ func (h *Handler) InitRouters() *gin.Engine {
 			authors.PUT(":id", h.updateAuthor)
 			authors.GET(":id", h.getAuthorById)
 			authors.GET(":id/poems", h.getPoemsById)
-			authors.GET(":limit/limit", h.GetAllAuthorsLimit)
+			authors.GET("limit/:limit", h.GetAllAuthorsLimit)
 			authors.GET("name/:name", h.getAuthorByTitle)
 			authors.DELETE(":id", h.deleteAuthor)
 		}
