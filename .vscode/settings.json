@@ -1,0 +1,20 @@
+{
+    "logFileHighlighter.customPatterns": [
+        {
+            "pattern": "ERROR",
+            "foreground": "#ff0000"
+        },
+        {
+            "pattern": "INFO",
+            "foreground": "#4432e6"
+        },
+        {
+            "pattern": "Poem-APP Started",
+            "foreground": "#09ff00"
+        },
+        {
+            "pattern": "Poem-APP Shutting Down",
+            "foreground": "#b31515"
+        }
+    ]
+}

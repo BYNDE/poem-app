@@ -1,0 +1,4 @@
+[2021-08-07 00:10:19]  INFO Poem-APP Started
+[2021-08-07 00:10:50]  INFO Method: 'GET' RequestURI: '/api/authors/432/poems' Status: '200 OK' CLientIp: '31.173.240.242'
+[2021-08-07 00:11:53] ERROR Method: 'GET' RequestURI: '/api/authors/4320/poems' Status: '500 Internal Server Error' Message: 'sql: no rows in result set' CLientIp: '31.173.240.242'
+[2021-08-07 00:20:18]  INFO Poem-APP Shutting Down

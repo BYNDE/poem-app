@@ -16,3 +16,22 @@ func newPoemService(repo repository.Poem) *PoemService {
 func (s *PoemService) Create(authorId int, poem poem.Poems) (int, error) {
 	return s.repo.Create(authorId, poem)
 }
+
+func (s *PoemService) GetById(id int) (poem.Poems, error) {
+	return s.repo.GetById(id)
+}
+
+func (s *PoemService) GetByTitle(title string) ([]poem.Poems, error) {
+	return s.repo.GetByTitle(title)
+}
+
+func (s *PoemService) Delete(id int) error {
+	return s.repo.Delete(id)
+}
+
+func (s *PoemService) Update(id int, input poem.UpdatePoemInput) error {
+	if err := input.Validate(); err != nil {
+		return err
+	}
+	return s.repo.Update(id, input)
+}

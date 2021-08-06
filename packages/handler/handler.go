@@ -22,7 +22,7 @@ func (h *Handler) InitRouters() *gin.Engine {
 		auth.POST("/sign-in", h.signIn)
 	}
 
-	api := router.Group("/api", h.userIdentity)
+	api := router.Group("/api") // ! h.userIdentity - индификация пользователя
 	{
 		poems := api.Group("/poems")
 		{
@@ -37,6 +37,8 @@ func (h *Handler) InitRouters() *gin.Engine {
 			authors.POST("/", h.addAuthor)
 			authors.PUT(":id", h.updateAuthor)
 			authors.GET(":id", h.getAuthorById)
+			authors.GET(":id/poems", h.getPoemsById)
+			authors.GET("name/:name", h.getAuthorByTitle)
 			authors.DELETE(":id", h.deleteAuthor)
 		}
 	}

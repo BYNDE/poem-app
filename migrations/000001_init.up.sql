@@ -16,7 +16,7 @@ CREATE TABLE poems
 (
     id serial NOT NULL UNIQUE,
     title VARCHAR(255) NOT NULL,
-    text VARCHAR(255) NOT NULL
+    text text NOT NULL
 );
 
 CREATE TABLE authors_list

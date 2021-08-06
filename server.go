@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/sirupsen/logrus"
+	"github.com/kabukky/httpscerts"
 )
 
 type Server struct {
@@ -13,22 +13,27 @@ type Server struct {
 }
 
 // Run - starting server
-func (s *Server) Run(port string, handler http.Handler) error {
+func (s *Server) Run(port string, handler http.Handler, enableTLS bool) error {
 	s.httpServer = &http.Server{
 		Addr:           ":" + port,
 		Handler:        handler,
 		MaxHeaderBytes: 1 << 20, // 1 MB
-		ReadTimeout:    10 + time.Second,
-		WriteTimeout:   10 + time.Second,
+		ReadTimeout:    10 * time.Second,
+		WriteTimeout:   10 * time.Second,
 	}
 
-	logrus.Info("Poem-APP is starting!")
+	if enableTLS {
+		if err := httpscerts.Check("cert.pem", "key.pem"); err != nil {
+			if err := httpscerts.Generate("cert.pem", "key.pem", "localhost:8080"); err != nil {
+				return err
+			}
+		}
+		return s.httpServer.ListenAndServeTLS("cert.pem", "key.pem")
+	}
 
-	// ! s.httpServer.ListenAndServeTLS() https/tls пратокол, в будущем добавить. Нужен ключ для принятия данных...
 	return s.httpServer.ListenAndServe()
 }
 
 func (s *Server) Shutdown(ctx context.Context) error {
-	logrus.Info("Poem-APP is stoping!")
 	return s.httpServer.Shutdown(ctx)
 }

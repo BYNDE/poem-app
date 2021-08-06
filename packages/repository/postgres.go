@@ -9,6 +9,7 @@ import (
 const (
 	usersTable        string = "users"
 	poemsTable        string = "poems"
+	authorTable       string = "authors"
 	authorsListsTable string = "authors_list"
 )
 
