@@ -90,7 +90,7 @@ func (r *PoemPostgres) GetById(id int) (poem.Poems, error) {
 func (r *PoemPostgres) GetByTitle(title string) ([]poem.Poems, error) {
 	var poems []poem.Poems
 
-	query := fmt.Sprintf("SELECT id, title, text FROM %s WHERE title LIKE $1", poemsTable)
+	query := fmt.Sprintf("SELECT id, title, text FROM %s WHERE title ILIKE $1", poemsTable)
 	if err := r.db.Select(&poems, query, title+"%"); err != nil {
 		return poems, err
 	}

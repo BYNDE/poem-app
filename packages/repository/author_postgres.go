@@ -45,7 +45,7 @@ func (r *AuthorPostgres) GetById(id int) (poem.Authors, error) {
 func (r *AuthorPostgres) GetByName(name string) ([]poem.Authors, error) {
 	var authors []poem.Authors
 
-	query := fmt.Sprintf("SELECT id, name FROM %s WHERE name LIKE $1", authorTable)
+	query := fmt.Sprintf("SELECT id, name FROM %s WHERE name ILIKE $1", authorTable)
 	err := r.db.Select(&authors, query, name+"%")
 	if err != nil {
 		return authors, err
