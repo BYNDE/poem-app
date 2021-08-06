@@ -11,3 +11,13 @@
 [2021-08-07 00:59:09]  INFO Poem-APP Started
 [2021-08-07 01:00:43]  INFO Poem-APP Started
 [2021-08-07 01:02:42]  INFO Method: 'GET' RequestURI: '/api/authors/limit/10' Status: '200 OK' CLientIp: '31.173.240.242'
+[2021-08-07 01:11:41]  INFO Method: 'GET' RequestURI: '/api/poems/title/%D0%AF' Status: '200 OK' CLientIp: '31.173.240.242'
+[2021-08-07 01:13:14]  INFO Method: 'GET' RequestURI: '/api/poems/title/%D0%B2%20%D0%B0%D0%B2%D1%82%D0%BE%D0%91%D1%83%D1%81%D0%B5' Status: '200 OK' CLientIp: '31.173.240.242'
+[2021-08-07 01:13:19]  INFO Method: 'GET' RequestURI: '/api/poems/title/%D0%B2%20%D0%B0' Status: '200 OK' CLientIp: '31.173.240.242'
+[2021-08-07 01:13:21]  INFO Method: 'GET' RequestURI: '/api/poems/title/%D0%B2' Status: '200 OK' CLientIp: '31.173.240.242'
+[2021-08-07 01:14:19]  INFO Method: 'GET' RequestURI: '/api/poems/title/%D0%92' Status: '200 OK' CLientIp: '31.173.240.242'
+[2021-08-07 01:14:32]  INFO Poem-APP Shutting Down
+[2021-08-07 01:14:35]  INFO Poem-APP Started
+[2021-08-07 01:14:58]  INFO Method: 'GET' RequestURI: '/api/poems/title/%D0%B2%20%D0%90%D0%B2%D1%82%D0%BE%D0%91%D1%83%D1%81%D0%B5' Status: '200 OK' CLientIp: '31.173.240.242'
+[2021-08-07 01:17:02] ERROR Method: 'GET' RequestURI: '/api/poems/limit/20' Status: '500 Internal Server Error' Message: 'pq: столбец "title" не существует' CLientIp: '31.173.240.242'
+[2021-08-07 01:17:50]  INFO Poem-APP Shutting Down

@@ -44,7 +44,7 @@ func (r *PoemPostgres) Create(authorId int, poem poem.Poems) (int, error) {
 func (r *PoemPostgres) GetAllLimit(limit int) ([]poem.Poems, error) {
 	var poems []poem.Poems
 
-	query := fmt.Sprintf("SELECT id, title, text FROM %s LIMIT $1", authorTable)
+	query := fmt.Sprintf("SELECT id, title, text FROM %s LIMIT $1", poemsTable)
 	if err := r.db.Select(&poems, query, limit); err != nil {
 		return poems, err
 	}
