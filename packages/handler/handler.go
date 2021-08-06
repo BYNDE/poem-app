@@ -28,7 +28,7 @@ func (h *Handler) InitRouters() *gin.Engine {
 		{
 			poems.POST("/", h.addPoem)
 			poems.GET(":id", h.getPoemById)
-			poems.GET(":limit/limit", h.GetAllPoemsLimit)
+			poems.GET("limit/:limit", h.GetAllPoemsLimit)
 			poems.PUT(":id", h.updatePoem)
 			poems.DELETE(":id", h.deletePoem)
 			poems.GET("title/:title", h.getPoemByTitle)
