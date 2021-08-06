@@ -51,7 +51,7 @@ func (r *PoemPostgres) GetAllLimit(limit int) ([]poem.Poems, error) {
 
 	var authorId int
 
-	for i, _ := range poems {
+	for i := range poems {
 		query = fmt.Sprintf("SELECT author_id FROM %s WHERE poem_id = $1", authorsListsTable)
 		if err := r.db.Get(&authorId, query, poems[i].Id); err != nil {
 			return poems, err
@@ -97,7 +97,7 @@ func (r *PoemPostgres) GetByTitle(title string) ([]poem.Poems, error) {
 
 	var authorId int
 
-	for i, _ := range poems {
+	for i := range poems {
 		query = fmt.Sprintf("SELECT author_id FROM %s WHERE poem_id = $1", authorsListsTable)
 		if err := r.db.Get(&authorId, query, poems[i].Id); err != nil {
 			return poems, err
