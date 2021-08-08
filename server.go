@@ -2,10 +2,12 @@ package poem
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"time"
 
 	"github.com/kabukky/httpscerts"
+	"github.com/sirupsen/logrus"
 )
 
 type Server struct {
@@ -13,10 +15,11 @@ type Server struct {
 }
 
 // Run - starting server
-func (s *Server) Run(port string, handler http.Handler, enableTLS bool) error {
+func (s *Server) Run(port string, enableTLS bool, handler http.Handler) error {
 	s.httpServer = &http.Server{
 		Addr:           ":" + port,
 		Handler:        handler,
+		ErrorLog:       log.New(logrus.StandardLogger().Writer(), "", 0),
 		MaxHeaderBytes: 1 << 20, // 1 MB
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,

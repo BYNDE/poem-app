@@ -1,5 +1,6 @@
 port: 8080
 logfile: logs.log
+enableTLS: false
 
 db:
   host: localhost
