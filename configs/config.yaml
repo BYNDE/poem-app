@@ -1,6 +1,7 @@
-port: 8080
+port: 80
+portTLS: 443
 logfile: logs.log
-enableTLS: false
+enableTLS: true
 
 db:
   host: localhost

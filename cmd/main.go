@@ -12,6 +12,7 @@ import (
 	"github.com/dvd-denis/poem-app/packages/handler"
 	"github.com/dvd-denis/poem-app/packages/repository"
 	"github.com/dvd-denis/poem-app/packages/service"
+	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -29,7 +30,7 @@ func main() {
 	customFormatter.ForceFormatting = true
 
 	logrus.SetFormatter(customFormatter)
-	// ! gin.SetMode(gin.ReleaseMode) сделать при релизе
+	gin.SetMode(gin.ReleaseMode)
 
 	if err := initConfig(); err != nil {
 		logrus.Fatalf("Error initializning configs: %s", err.Error())
@@ -66,7 +67,7 @@ func main() {
 
 	srv := new(poem.Server)
 	go func() {
-		if err := srv.Run(viper.GetString("port"), viper.GetBool("enableTLS"), handlers.InitRouters()); err != nil {
+		if err := srv.Run(viper.GetString("port"), viper.GetString("portTLS"), viper.GetBool("enableTLS"), handlers.InitRouters()); err != nil {
 			if err != http.ErrServerClosed {
 				logrus.Fatalf("error occured while running http server: %s", err.Error())
 			}
@@ -81,8 +82,12 @@ func main() {
 
 	logrus.Info("Poem-APP Shutting Down")
 
-	if err := srv.Shutdown(context.Background()); err != nil {
-		logrus.Errorf("error occured on server shutting down: %s", err.Error())
+	errs := srv.Shutdown(context.Background())
+
+	for _, err := range errs {
+		if err != nil {
+			logrus.Errorf("error occured on server shutting down: %s", err.Error())
+		}
 	}
 
 	if err := db.Close(); err != nil {
