@@ -67,7 +67,7 @@ func main() {
 
 	srv := new(poem.Server)
 	go func() {
-		if err := srv.Run(viper.GetString("port"), viper.GetString("portTLS"), viper.GetBool("enableTLS"), handlers.InitRouters()); err != nil {
+		if err := srv.Run(viper.GetString("port"), viper.GetString("portTLS"), viper.GetUint("enableTLS"), handlers.InitRouters()); err != nil {
 			if err != http.ErrServerClosed {
 				logrus.Fatalf("error occured while running http server: %s", err.Error())
 			}

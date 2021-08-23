@@ -2,11 +2,11 @@ package poem
 
 import (
 	"context"
+	"crypto/tls"
 	"log"
 	"net/http"
 	"time"
 
-	"github.com/kabukky/httpscerts"
 	"github.com/sirupsen/logrus"
 )
 
@@ -15,8 +15,10 @@ type Server struct {
 	httpsServer *http.Server
 }
 
+// ! https://eli.thegreenplace.net/2021/go-https-servers-with-tls/ - MTLS для безопасного сойденения
+
 // Run - starting server
-func (s *Server) Run(port string, portTLS string, enableTLS bool, handler http.Handler) error {
+func (s *Server) Run(port string, portTLS string, enableTLS uint, handler http.Handler) error {
 	s.httpServer = &http.Server{
 		Addr:           ":" + port,
 		Handler:        handler,
@@ -32,18 +34,27 @@ func (s *Server) Run(port string, portTLS string, enableTLS bool, handler http.H
 		MaxHeaderBytes: 1 << 20, // 1 MB
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
+		TLSConfig: &tls.Config{
+			MinVersion:               tls.VersionTLS12,
+			PreferServerCipherSuites: true,
+		},
 	}
 
-	if enableTLS {
-		if err := httpscerts.Check("cert.pem", "key.pem"); err != nil {
-			if err := httpscerts.Generate("cert.pem", "key.pem", "localhost"); err != nil {
-				return err
-			}
+	if err := Check("cert.pem", "key.pem"); err != nil {
+		if err := Generate("ByndeCorp", "localhost", "cert.pem", "key.pem"); err != nil {
+			return err
 		}
-		go s.httpsServer.ListenAndServeTLS("cert.pem", "key.pem")
 	}
 
-	return s.httpServer.ListenAndServe()
+	if enableTLS == 2 {
+		go s.httpsServer.ListenAndServeTLS("cert.pem", "key.pem")
+		return s.httpServer.ListenAndServe()
+	} else if enableTLS == 1 {
+		return s.httpsServer.ListenAndServeTLS("cert.pem", "key.pem")
+	} else {
+		return s.httpServer.ListenAndServe()
+	}
+
 }
 
 func (s *Server) Shutdown(ctx context.Context) [2]error {
