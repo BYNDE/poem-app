@@ -3,11 +3,8 @@ package poem
 import (
 	"context"
 	"crypto/tls"
-	"log"
 	"net/http"
 	"time"
-
-	"github.com/sirupsen/logrus"
 )
 
 type Server struct {
