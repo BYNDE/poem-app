@@ -46,7 +46,7 @@ func main() {
 	}
 	defer f.Close()
 
-	logrus.SetOutput(io.MultiWriter(os.Stderr, f)) // ? Запись логов
+	logrus.SetOutput(io.MultiWriter(f)) // ? Запись логов
 
 	db, err := repository.NewPostgresDB(repository.Config{
 		Host:     viper.GetString("db.host"),
