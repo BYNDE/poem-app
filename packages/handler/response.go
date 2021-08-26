@@ -18,8 +18,8 @@ type statusResponse struct {
 }
 
 func newResponse(c *gin.Context, StatusCode int, obj interface{}) {
-	// req, _ := url.QueryUnescape(c.Request.RequestURI)
-	// logrus.Infoln("Method: '" + c.Request.Method + "' RequestURI: '" + req + "' Status: '" + strconv.Itoa(StatusCode) + " " + http.StatusText(StatusCode) + "'")
+	req, _ := url.QueryUnescape(c.Request.RequestURI)
+	logrus.Infoln("Method: '" + c.Request.Method + "' RequestURI: '" + req + "' Status: '" + strconv.Itoa(StatusCode) + " " + http.StatusText(StatusCode) + "'")
 	c.JSON(StatusCode, obj)
 }
 
