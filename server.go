@@ -22,7 +22,7 @@ func (s *Server) Run(port string, portTLS string, enableTLS uint, handler http.H
 	s.httpServer = &http.Server{
 		Addr:           ":" + port,
 		Handler:        handler,
-		ErrorLog:       log.New(logrus.StandardLogger().Writer(), "", 0),
+		// ErrorLog:       log.New(logrus.StandardLogger().Writer(), "", 0),
 		MaxHeaderBytes: 1 << 20, // 1 MB
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
@@ -30,7 +30,7 @@ func (s *Server) Run(port string, portTLS string, enableTLS uint, handler http.H
 	s.httpsServer = &http.Server{
 		Addr:           ":" + portTLS,
 		Handler:        handler,
-		ErrorLog:       log.New(logrus.StandardLogger().Writer(), "", 0),
+		// ErrorLog:       log.New(logrus.StandardLogger().Writer(), "", 0),
 		MaxHeaderBytes: 1 << 20, // 1 MB
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
