@@ -12,7 +12,6 @@ import (
 	"github.com/dvd-denis/poem-app/packages/handler"
 	"github.com/dvd-denis/poem-app/packages/repository"
 	"github.com/dvd-denis/poem-app/packages/service"
-	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -30,7 +29,7 @@ func main() {
 	customFormatter.ForceFormatting = true
 
 	logrus.SetFormatter(customFormatter)
-	gin.SetMode(gin.ReleaseMode)
+	// gin.SetMode(gin.ReleaseMode)
 
 	if err := initConfig(); err != nil {
 		logrus.Fatalf("Error initializning configs: %s", err.Error())
@@ -46,7 +45,7 @@ func main() {
 	}
 	defer f.Close()
 
-	logrus.SetOutput(io.MultiWriter(f)) // ? Запись логов
+	logrus.SetOutput(io.MultiWriter(f, os.Stderr)) // ? Запись логов
 
 	db, err := repository.NewPostgresDB(repository.Config{
 		Host:     viper.GetString("db.host"),
@@ -67,7 +66,7 @@ func main() {
 
 	srv := new(poem.Server)
 	go func() {
-		if err := srv.Run(viper.GetString("port"), viper.GetString("portTLS"), viper.GetUint("enableTLS"), handlers.InitRouters()); err != nil {
+		if err := srv.Run(viper.GetString("port"), viper.GetString("portTLS"), handlers.InitRouters()); err != nil {
 			if err != http.ErrServerClosed {
 				logrus.Fatalf("error occured while running http server: %s", err.Error())
 			}
