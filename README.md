@@ -1,5 +1,5 @@
 # Rest-Api-Server-V2
-This is demo rest-api server
+This is rest-api server
 
 Used postgreSQL
 
