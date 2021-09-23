@@ -4,12 +4,12 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/dvd-denis/poem-app"
+	platform "github.com/dvd-denis/IT-Platform"
 	"github.com/gin-gonic/gin"
 )
 
 func (h *Handler) addAuthor(c *gin.Context) {
-	var input poem.Authors
+	var input platform.Authors
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
@@ -48,29 +48,29 @@ func (h *Handler) getAuthorById(c *gin.Context) {
 		return
 	}
 
-	poem, err := h.services.Author.GetById(id)
+	platform, err := h.services.Author.GetById(id)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	newResponse(c, http.StatusOK, poem)
+	newResponse(c, http.StatusOK, platform)
 }
 
-func (h *Handler) getPoemsById(c *gin.Context) {
+func (h *Handler) getPlatformsById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	poems, err := h.services.Author.GetPoemsById(id)
+	platforms, err := h.services.Author.GetPlatformsById(id)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	newResponse(c, http.StatusOK, poems)
+	newResponse(c, http.StatusOK, platforms)
 }
 
 func (h *Handler) getAuthorByTitle(c *gin.Context) {
@@ -92,7 +92,7 @@ func (h *Handler) updateAuthor(c *gin.Context) {
 		return
 	}
 
-	var input poem.UpdateAuthorInput
+	var input platform.UpdateAuthorInput
 	if err = c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return

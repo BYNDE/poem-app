@@ -1,4 +1,8 @@
-DROP TABLE users;
-DROP TABLE authors_list;
-DROP TABLE poems;
-DROP TABLE authors;
+CREATE TABLE users;
+CREATE TABLE images;
+CREATE TABLE student;
+CREATE TABLE student_representative;
+CREATE TABLE teacher;
+CREATE TABLE communication;
+CREATE TABLE directions;
+CREATE TABLE group;
