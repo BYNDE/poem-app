@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/dvd-denis/poem-app"
+	"github.com/dvd-denis/IT-Platform"
 	"github.com/jmoiron/sqlx"
 )
 

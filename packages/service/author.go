@@ -1,8 +1,8 @@
 package service
 
 import (
+	"github.com/dvd-denis/IT-Platform/packages/repository"
 	"github.com/dvd-denis/poem-app"
-	"github.com/dvd-denis/poem-app/packages/repository"
 )
 
 type AuthorService struct {
