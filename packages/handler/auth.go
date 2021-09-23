@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 
-	"github.com/dvd-denis/poem-app"
+	"github.com/dvd-denis/IT-Platform"
 	"github.com/gin-gonic/gin"
 )
 

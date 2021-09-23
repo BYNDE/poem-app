@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"github.com/dvd-denis/poem-app/packages/service"
+	"github.com/dvd-denis/IT-Platform/packages/service"
 	"github.com/gin-gonic/gin"
 )
 

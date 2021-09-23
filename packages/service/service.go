@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/dvd-denis/poem-app"
-	"github.com/dvd-denis/poem-app/packages/repository"
+	"github.com/dvd-denis/IT-Platform"
+	"github.com/dvd-denis/IT-Platform/packages/repository"
 )
 
 type Authorization interface {
