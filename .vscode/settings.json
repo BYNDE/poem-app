@@ -13,11 +13,11 @@
             "foreground": "#4432e6"
         },
         {
-            "pattern": "Poem-APP Started",
+            "pattern": "IT-Platform Started",
             "foreground": "#09ff00"
         },
         {
-            "pattern": "Poem-APP Shutting Down",
+            "pattern": "IT-Platform Shutting Down",
             "foreground": "#b31515"
         }
     ]

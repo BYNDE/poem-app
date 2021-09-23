@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/dvd-denis/poem-app"
-	"github.com/dvd-denis/poem-app/packages/repository"
+	platform "github.com/dvd-denis/IT-Platform"
+	"github.com/dvd-denis/IT-Platform/packages/repository"
 )
 
 const (
@@ -30,7 +30,7 @@ func NewAuthService(repo repository.Authorization) *AuthService {
 	return &AuthService{repo: repo}
 }
 
-func (s *AuthService) CreateUser(user poem.User) (int, error) {
+func (s *AuthService) CreateUser(user platform.User) (int, error) {
 	user.Password = generatePasswordHash(user.Password)
 	return s.repo.CreateUser(user)
 }
