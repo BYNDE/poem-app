@@ -1,8 +1,8 @@
-package poem
+package platform
 
 import "errors"
 
-type Poems struct {
+type Platforms struct {
 	Id     int    `json:"id" db:"id"`
 	Title  string `json:"title" db:"title" binding:"required"`
 	Text   string `json:"text" db:"text" binding:"required"`
@@ -15,17 +15,17 @@ type Authors struct {
 }
 
 type AuthorsList struct {
-	Id       int
-	AuthorId int
-	PoemId   int
+	Id         int
+	AuthorId   int
+	PlatformId int
 }
 
-type UpdatePoemInput struct {
+type UpdatePlatformInput struct {
 	Title *string `json:"title"`
 	Text  *string `json:"text"`
 }
 
-func (i UpdatePoemInput) Validate() error {
+func (i UpdatePlatformInput) Validate() error {
 	if i.Title == nil && i.Text == nil {
 		return errors.New("update structure has no values")
 	}

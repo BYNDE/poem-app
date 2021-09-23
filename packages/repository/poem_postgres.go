@@ -4,33 +4,33 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/dvd-denis/poem-app"
+	platform "github.com/dvd-denis/IT-Platform"
 	"github.com/jmoiron/sqlx"
 	"github.com/sirupsen/logrus"
 )
 
-type PoemPostgres struct {
+type PlatformPostgres struct {
 	db *sqlx.DB
 }
 
-func NewPoemPostgres(db *sqlx.DB) *PoemPostgres {
-	return &PoemPostgres{db: db}
+func NewPlatformPostgres(db *sqlx.DB) *PlatformPostgres {
+	return &PlatformPostgres{db: db}
 }
 
-func (r *PoemPostgres) Create(authorId int, poem poem.Poems) (int, error) {
+func (r *PlatformPostgres) Create(authorId int, platform platform.Platforms) (int, error) {
 	tx, err := r.db.Begin()
 	if err != nil {
 		return 0, err
 	}
 
 	var id int
-	createPoemQuery := fmt.Sprintf("INSERT INTO %s (title, text) VALUES ($1, $2) RETURNING id", poemsTable)
-	row := tx.QueryRow(createPoemQuery, poem.Title, poem.Text)
+	createPlatformQuery := fmt.Sprintf("INSERT INTO %s (title, text) VALUES ($1, $2) RETURNING id", platformsTable)
+	row := tx.QueryRow(createPlatformQuery, platform.Title, platform.Text)
 	if err := row.Scan(&id); err != nil {
 		tx.Rollback()
 		return 0, err
 	}
-	CreateAuthorsListQuery := fmt.Sprintf("INSERT INTO %s (author_id, poem_id) VALUES ($1, $2)", authorsListsTable)
+	CreateAuthorsListQuery := fmt.Sprintf("INSERT INTO %s (author_id, platform_id) VALUES ($1, $2)", authorsListsTable)
 	_, err = tx.Exec(CreateAuthorsListQuery, authorId, id)
 	if err != nil {
 		tx.Rollback()
@@ -41,85 +41,85 @@ func (r *PoemPostgres) Create(authorId int, poem poem.Poems) (int, error) {
 
 }
 
-func (r *PoemPostgres) GetAllLimit(limit int) ([]poem.Poems, error) {
-	var poems []poem.Poems
+func (r *PlatformPostgres) GetAllLimit(limit int) ([]platform.Platforms, error) {
+	var platforms []platform.Platforms
 
-	query := fmt.Sprintf("SELECT id, title, text FROM %s LIMIT $1", poemsTable)
-	if err := r.db.Select(&poems, query, limit); err != nil {
-		return poems, err
+	query := fmt.Sprintf("SELECT id, title, text FROM %s LIMIT $1", platformsTable)
+	if err := r.db.Select(&platforms, query, limit); err != nil {
+		return platforms, err
 	}
 
 	var authorId int
 
-	for i := range poems {
-		query = fmt.Sprintf("SELECT author_id FROM %s WHERE poem_id = $1", authorsListsTable)
-		if err := r.db.Get(&authorId, query, poems[i].Id); err != nil {
-			return poems, err
+	for i := range platforms {
+		query = fmt.Sprintf("SELECT author_id FROM %s WHERE platform_id = $1", authorsListsTable)
+		if err := r.db.Get(&authorId, query, platforms[i].Id); err != nil {
+			return platforms, err
 		}
 
 		query = fmt.Sprintf("SELECT name FROM %s WHERE id = $1", authorTable)
-		if err := r.db.Get(&poems[i].Author, query, authorId); err != nil {
-			return poems, err
+		if err := r.db.Get(&platforms[i].Author, query, authorId); err != nil {
+			return platforms, err
 		}
 	}
 
-	return poems, nil
+	return platforms, nil
 }
 
-func (r *PoemPostgres) GetById(id int) (poem.Poems, error) {
-	var poem poem.Poems
+func (r *PlatformPostgres) GetById(id int) (platform.Platforms, error) {
+	var platform platform.Platforms
 
-	query := fmt.Sprintf("SELECT id, title, text FROM %s WHERE id = $1", poemsTable)
-	if err := r.db.Get(&poem, query, id); err != nil {
-		return poem, err
+	query := fmt.Sprintf("SELECT id, title, text FROM %s WHERE id = $1", platformsTable)
+	if err := r.db.Get(&platform, query, id); err != nil {
+		return platform, err
 	}
 
 	var authorId int
 
-	query = fmt.Sprintf("SELECT author_id FROM %s WHERE poem_id = $1", authorsListsTable)
+	query = fmt.Sprintf("SELECT author_id FROM %s WHERE platform_id = $1", authorsListsTable)
 	if err := r.db.Get(&authorId, query, id); err != nil {
-		return poem, err
+		return platform, err
 	}
 
 	query = fmt.Sprintf("SELECT name FROM %s WHERE id = $1", authorTable)
-	err := r.db.Get(&poem.Author, query, authorId)
+	err := r.db.Get(&platform.Author, query, authorId)
 
-	return poem, err
+	return platform, err
 }
 
-func (r *PoemPostgres) GetByTitle(title string) ([]poem.Poems, error) {
-	var poems []poem.Poems
+func (r *PlatformPostgres) GetByTitle(title string) ([]platform.Platforms, error) {
+	var platforms []platform.Platforms
 
-	query := fmt.Sprintf("SELECT id, title, text FROM %s WHERE title ILIKE $1", poemsTable)
-	if err := r.db.Select(&poems, query, title+"%"); err != nil {
-		return poems, err
+	query := fmt.Sprintf("SELECT id, title, text FROM %s WHERE title ILIKE $1", platformsTable)
+	if err := r.db.Select(&platforms, query, title+"%"); err != nil {
+		return platforms, err
 	}
 
 	var authorId int
 
-	for i := range poems {
-		query = fmt.Sprintf("SELECT author_id FROM %s WHERE poem_id = $1", authorsListsTable)
-		if err := r.db.Get(&authorId, query, poems[i].Id); err != nil {
-			return poems, err
+	for i := range platforms {
+		query = fmt.Sprintf("SELECT author_id FROM %s WHERE platform_id = $1", authorsListsTable)
+		if err := r.db.Get(&authorId, query, platforms[i].Id); err != nil {
+			return platforms, err
 		}
 
 		query = fmt.Sprintf("SELECT name FROM %s WHERE id = $1", authorTable)
-		if err := r.db.Get(&poems[i].Author, query, authorId); err != nil {
-			return poems, err
+		if err := r.db.Get(&platforms[i].Author, query, authorId); err != nil {
+			return platforms, err
 		}
 	}
 
-	return poems, nil
+	return platforms, nil
 }
 
-func (r *PoemPostgres) Delete(id int) error {
-	query := fmt.Sprintf("DELETE FROM %s pm USING %s al WHERE pm.id = al.poem_id AND al.poem_id=$1", poemsTable, authorsListsTable)
+func (r *PlatformPostgres) Delete(id int) error {
+	query := fmt.Sprintf("DELETE FROM %s pm USING %s al WHERE pm.id = al.platform_id AND al.platform_id=$1", platformsTable, authorsListsTable)
 	_, err := r.db.Exec(query, id)
 
 	return err
 }
 
-func (r *PoemPostgres) Update(id int, input poem.UpdatePoemInput) error {
+func (r *PlatformPostgres) Update(id int, input platform.UpdatePlatformInput) error {
 	setValues := make([]string, 0)
 	args := make([]interface{}, 0)
 	argId := 1
@@ -138,7 +138,7 @@ func (r *PoemPostgres) Update(id int, input poem.UpdatePoemInput) error {
 
 	setQuery := strings.Join(setValues, ", ")
 
-	query := fmt.Sprintf("UPDATE %s SET %s WHERE id = $%d", poemsTable, setQuery, argId)
+	query := fmt.Sprintf("UPDATE %s SET %s WHERE id = $%d", platformsTable, setQuery, argId)
 
 	args = append(args, id)
 

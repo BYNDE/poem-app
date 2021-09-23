@@ -8,10 +8,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/dvd-denis/poem-app"
-	"github.com/dvd-denis/poem-app/packages/handler"
-	"github.com/dvd-denis/poem-app/packages/repository"
-	"github.com/dvd-denis/poem-app/packages/service"
+	platform "github.com/dvd-denis/IT-Platform"
+	"github.com/dvd-denis/IT-Platform/packages/handler"
+	"github.com/dvd-denis/IT-Platform/packages/repository"
+	"github.com/dvd-denis/IT-Platform/packages/service"
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -64,7 +64,7 @@ func main() {
 	service := service.NewService(*repos)
 	handlers := handler.NewHandler(service)
 
-	srv := new(poem.Server)
+	srv := new(platform.Server)
 	go func() {
 		if err := srv.Run(viper.GetString("port"), viper.GetString("portTLS"), handlers.InitRouters()); err != nil {
 			if err != http.ErrServerClosed {
@@ -73,13 +73,13 @@ func main() {
 		}
 	}()
 
-	logrus.Info("Poem-APP Started")
+	logrus.Info("IT-Platform Started")
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
 	<-quit
 
-	logrus.Info("Poem-APP Shutting Down")
+	logrus.Info("IT-Platform Shutting Down")
 
 	errs := srv.Shutdown(context.Background())
 

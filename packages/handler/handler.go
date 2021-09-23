@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"github.com/dvd-denis/poem-app/packages/service"
+	"github.com/dvd-denis/IT-Platform/packages/service"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,21 +24,21 @@ func (h *Handler) InitRouters() *gin.Engine {
 
 	api := router.Group("/api") // ! h.userIdentity - индификация пользователя
 	{
-		poems := api.Group("/poems")
+		platforms := api.Group("/platforms")
 		{
-			poems.POST("/", h.addPoem)
-			poems.GET(":id", h.getPoemById)
-			poems.GET("limit/:limit", h.GetAllPoemsLimit)
-			poems.PUT(":id", h.updatePoem)
-			poems.DELETE(":id", h.deletePoem)
-			poems.GET("title/:title", h.getPoemByTitle)
+			platforms.POST("/", h.addPlatform)
+			platforms.GET(":id", h.getPlatformById)
+			platforms.GET("limit/:limit", h.GetAllPlatformsLimit)
+			platforms.PUT(":id", h.updatePlatform)
+			platforms.DELETE(":id", h.deletePlatform)
+			platforms.GET("title/:title", h.getPlatformByTitle)
 		}
 		authors := api.Group("/authors")
 		{
 			authors.POST("/", h.addAuthor)
 			authors.PUT(":id", h.updateAuthor)
 			authors.GET(":id", h.getAuthorById)
-			authors.GET(":id/poems", h.getPoemsById)
+			authors.GET(":id/platforms", h.getPlatformsById)
 			authors.GET("limit/:limit", h.GetAllAuthorsLimit)
 			authors.GET("name/:name", h.getAuthorByTitle)
 			authors.DELETE(":id", h.deleteAuthor)

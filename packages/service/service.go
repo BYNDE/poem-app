@@ -1,45 +1,45 @@
 package service
 
 import (
-	"github.com/dvd-denis/poem-app"
-	"github.com/dvd-denis/poem-app/packages/repository"
+	platform "github.com/dvd-denis/IT-Platform"
+	"github.com/dvd-denis/IT-Platform/packages/repository"
 )
 
 type Authorization interface {
-	CreateUser(user poem.User) (int, error)
+	CreateUser(user platform.User) (int, error)
 	GenerateToken(username, password string) (string, error)
 	ParseToken(token string) (int, error)
 }
 
-type Poem interface {
-	Create(authorId int, poem poem.Poems) (int, error)
-	GetById(id int) (poem.Poems, error)
-	GetByTitle(title string) ([]poem.Poems, error)
+type Platform interface {
+	Create(authorId int, platform platform.Platforms) (int, error)
+	GetById(id int) (platform.Platforms, error)
+	GetByTitle(title string) ([]platform.Platforms, error)
 	Delete(id int) error
-	Update(id int, input poem.UpdatePoemInput) error
-	GetAllLimit(limit int) ([]poem.Poems, error)
+	Update(id int, input platform.UpdatePlatformInput) error
+	GetAllLimit(limit int) ([]platform.Platforms, error)
 }
 
 type Author interface {
-	Create(author poem.Authors) (int, error)
-	GetAllLimit(limit int) ([]poem.Authors, error)
-	GetById(id int) (poem.Authors, error)
-	GetByName(name string) ([]poem.Authors, error)
+	Create(author platform.Authors) (int, error)
+	GetAllLimit(limit int) ([]platform.Authors, error)
+	GetById(id int) (platform.Authors, error)
+	GetByName(name string) ([]platform.Authors, error)
 	Delete(id int) error
-	Update(id int, input poem.UpdateAuthorInput) error
-	GetPoemsById(id int) ([]poem.Poems, error)
+	Update(id int, input platform.UpdateAuthorInput) error
+	GetPlatformsById(id int) ([]platform.Platforms, error)
 }
 
 type Service struct {
 	Authorization
-	Poem
+	Platform
 	Author
 }
 
 func NewService(repos repository.Repository) *Service {
 	return &Service{
 		Authorization: NewAuthService(repos.Authorization),
-		Poem:          newPoemService(repos.Poem),
+		Platform:      newPlatformService(repos.Platform),
 		Author:        newAuthorService(repos.Author),
 	}
 }
