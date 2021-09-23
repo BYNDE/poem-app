@@ -3,12 +3,12 @@ package handler
 import (
 	"net/http"
 
-	"github.com/dvd-denis/poem-app"
+	platform "github.com/dvd-denis/IT-Platform"
 	"github.com/gin-gonic/gin"
 )
 
 func (h *Handler) signUp(c *gin.Context) {
-	var input poem.User
+	var input platform.User
 
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())

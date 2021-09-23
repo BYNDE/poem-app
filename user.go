@@ -1,4 +1,4 @@
-package poem
+package platform
 
 type User struct {
 	Id       int    `json:"-" db:"id"`

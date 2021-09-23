@@ -8,7 +8,7 @@ import (
 
 const (
 	usersTable        string = "users"
-	poemsTable        string = "poems"
+	platformsTable    string = "platforms"
 	authorTable       string = "authors"
 	authorsListsTable string = "authors_list"
 )

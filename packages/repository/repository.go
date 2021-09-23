@@ -1,44 +1,44 @@
 package repository
 
 import (
-	"github.com/dvd-denis/poem-app"
+	platform "github.com/dvd-denis/IT-Platform"
 	"github.com/jmoiron/sqlx"
 )
 
 type Authorization interface {
-	CreateUser(user poem.User) (int, error)
-	GetUser(username, password string) (poem.User, error)
+	CreateUser(user platform.User) (int, error)
+	GetUser(username, password string) (platform.User, error)
 }
 
-type Poem interface {
-	Create(authorId int, poem poem.Poems) (int, error)
-	GetById(id int) (poem.Poems, error)
-	GetByTitle(title string) ([]poem.Poems, error)
+type Platform interface {
+	Create(authorId int, platform platform.Platforms) (int, error)
+	GetById(id int) (platform.Platforms, error)
+	GetByTitle(title string) ([]platform.Platforms, error)
 	Delete(id int) error
-	Update(id int, input poem.UpdatePoemInput) error
-	GetAllLimit(limit int) ([]poem.Poems, error)
+	Update(id int, input platform.UpdatePlatformInput) error
+	GetAllLimit(limit int) ([]platform.Platforms, error)
 }
 
 type Author interface {
-	Create(author poem.Authors) (int, error)
-	GetById(id int) (poem.Authors, error)
-	GetByName(name string) ([]poem.Authors, error)
+	Create(author platform.Authors) (int, error)
+	GetById(id int) (platform.Authors, error)
+	GetByName(name string) ([]platform.Authors, error)
 	Delete(id int) error
-	Update(id int, input poem.UpdateAuthorInput) error
-	GetPoemsById(id int) ([]poem.Poems, error)
-	GetAllLimit(limit int) ([]poem.Authors, error)
+	Update(id int, input platform.UpdateAuthorInput) error
+	GetPlatformsById(id int) ([]platform.Platforms, error)
+	GetAllLimit(limit int) ([]platform.Authors, error)
 }
 
 type Repository struct {
 	Authorization
-	Poem
+	Platform
 	Author
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthPostgres(db),
-		Poem:          NewPoemPostgres(db),
+		Platform:      NewPlatformPostgres(db),
 		Author:        NewAuthorPostgres(db),
 	}
 }

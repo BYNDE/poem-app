@@ -4,29 +4,29 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/dvd-denis/poem-app"
+	platform "github.com/dvd-denis/IT-Platform"
 	"github.com/gin-gonic/gin"
 )
 
-type poemInInput struct {
+type platformInInput struct {
 	Title    string `json:"title" binding:"required"`
 	Text     string `json:"text" binding:"required"`
 	AuthorId int    `json:"authorId"`
 }
 
-func (h *Handler) addPoem(c *gin.Context) {
-	var input poemInInput
+func (h *Handler) addPlatform(c *gin.Context) {
+	var input platformInInput
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	poem := poem.Poems{
+	platform := platform.Platforms{
 		Title: input.Title,
 		Text:  input.Text,
 	}
 
-	id, err := h.services.Poem.Create(input.AuthorId, poem)
+	id, err := h.services.Platform.Create(input.AuthorId, platform)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -37,67 +37,67 @@ func (h *Handler) addPoem(c *gin.Context) {
 	})
 }
 
-func (h *Handler) GetAllPoemsLimit(c *gin.Context) {
+func (h *Handler) GetAllPlatformsLimit(c *gin.Context) {
 	limit, err := strconv.Atoi(c.Param("limit"))
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	poems, err := h.services.Poem.GetAllLimit(limit)
+	platforms, err := h.services.Platform.GetAllLimit(limit)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
-	newResponse(c, http.StatusOK, poems)
+	newResponse(c, http.StatusOK, platforms)
 }
 
-func (h *Handler) getPoemById(c *gin.Context) {
+func (h *Handler) getPlatformById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	poem, err := h.services.Poem.GetById(id)
+	platform, err := h.services.Platform.GetById(id)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	newResponse(c, http.StatusOK, poem)
+	newResponse(c, http.StatusOK, platform)
 }
 
-// type getAllPoemsResponse struct {
-// 	Data []poem.Poems `json:"data"`
+// type getAllPlatformsResponse struct {
+// 	Data []platform.Platforms `json:"data"`
 // }
 
-func (h *Handler) getPoemByTitle(c *gin.Context) {
+func (h *Handler) getPlatformByTitle(c *gin.Context) {
 	title := c.Param("title")
 
-	poems, err := h.services.Poem.GetByTitle(title)
+	platforms, err := h.services.Platform.GetByTitle(title)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	newResponse(c, http.StatusOK, poems)
+	newResponse(c, http.StatusOK, platforms)
 }
 
-func (h *Handler) updatePoem(c *gin.Context) {
+func (h *Handler) updatePlatform(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	var input poem.UpdatePoemInput
+	var input platform.UpdatePlatformInput
 	if err = c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	if err := h.services.Poem.Update(id, input); err != nil {
+	if err := h.services.Platform.Update(id, input); err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -105,14 +105,14 @@ func (h *Handler) updatePoem(c *gin.Context) {
 	newResponse(c, http.StatusOK, statusResponse{"ok"})
 }
 
-func (h *Handler) deletePoem(c *gin.Context) {
+func (h *Handler) deletePlatform(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	err = h.services.Poem.Delete(id)
+	err = h.services.Platform.Delete(id)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
